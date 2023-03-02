@@ -26,7 +26,11 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const parsed = numbers.map((badParse: string): string =>
+        !+badParse ? "0" : badParse
+    );
+    const intStrings = parsed.map((aNumb: string): number => +aNumb);
+    return intStrings;
 }
 
 /**
