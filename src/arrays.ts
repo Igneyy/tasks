@@ -105,7 +105,9 @@ export function makeMath(addends: number[]): string {
         0
     );
     let equation = addends.join("+");
-    equation ? equation : (equation = "0");
+    if (!equation) {
+        equation = "0";
+    }
     return sum + "=" + equation;
 }
 
@@ -119,5 +121,26 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const injectedArray: number[] = [...values];
+    const firstNegative = values.findIndex(
+        (value: number): boolean => value < 0
+    );
+    if (firstNegative >= 0) {
+        const spliceNegative: number[] = [...values];
+        spliceNegative.splice(firstNegative);
+        const sum = spliceNegative.reduce(
+            (currentSum: number, num: number) => currentSum + num,
+            0
+        );
+        console.log(firstNegative);
+        console.log(sum);
+        injectedArray.splice(firstNegative + 1, 0, sum);
+    } else {
+        const sum = values.reduce(
+            (currentSum: number, num: number) => currentSum + num,
+            0
+        );
+        injectedArray.push(sum);
+    }
+    return injectedArray;
 }
