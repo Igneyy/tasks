@@ -42,7 +42,16 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
-    return false;
+    let valid = false;
+    if (question.type === "short_answer_question") {
+        valid = true;
+    }
+    if (question.type === "multiple_choice_question") {
+        valid = question.options.some(
+            (option: string): boolean => answer === option
+        );
+    }
+    return valid;
 }
 
 /**
