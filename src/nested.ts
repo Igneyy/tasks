@@ -213,7 +213,22 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return [];
+    const deepCopy = questions.map(
+        (aQuestion: Question): Question => ({ ...aQuestion })
+    );
+    const target = deepCopy.find(
+        (aQuestion: Question): boolean => aQuestion.id === targetId
+    );
+    if (target) {
+        if (
+            target.type === "multiple_choice_question" &&
+            newQuestionType !== "multiple_choice_question"
+        ) {
+            target.options = [];
+        }
+        target.type = newQuestionType;
+    }
+    return deepCopy;
 }
 
 /**
