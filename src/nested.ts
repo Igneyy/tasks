@@ -189,7 +189,16 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    return [];
+    const deepCopy = questions.map(
+        (aQuestion: Question): Question => ({ ...aQuestion })
+    );
+    const target = deepCopy.find(
+        (aQuestion: Question): boolean => aQuestion.id === targetId
+    );
+    if (target) {
+        target.name = newName;
+    }
+    return deepCopy;
 }
 
 /***
