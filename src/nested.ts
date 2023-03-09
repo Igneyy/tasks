@@ -1,6 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -190,7 +190,10 @@ export function renameQuestionById(
     newName: string
 ): Question[] {
     const deepCopy = questions.map(
-        (aQuestion: Question): Question => ({ ...aQuestion })
+        (aQuestion: Question): Question => ({
+            ...aQuestion,
+            options: [...aQuestion.options]
+        })
     );
     const target = deepCopy.find(
         (aQuestion: Question): boolean => aQuestion.id === targetId
@@ -214,7 +217,10 @@ export function changeQuestionTypeById(
     newQuestionType: QuestionType
 ): Question[] {
     const deepCopy = questions.map(
-        (aQuestion: Question): Question => ({ ...aQuestion })
+        (aQuestion: Question): Question => ({
+            ...aQuestion,
+            options: [...aQuestion.options]
+        })
     );
     const target = deepCopy.find(
         (aQuestion: Question): boolean => aQuestion.id === targetId
@@ -247,7 +253,23 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    return [];
+    const deepCopy = questions.map(
+        (aQuestion: Question): Question => ({
+            ...aQuestion,
+            options: [...aQuestion.options]
+        })
+    );
+    const target = deepCopy.find(
+        (aQuestion: Question): boolean => aQuestion.id === targetId
+    );
+    if (target) {
+        if (targetOptionIndex === -1) {
+            target.options.push(newOption);
+        } else {
+            target.options[targetOptionIndex] = newOption;
+        }
+    }
+    return deepCopy;
 }
 
 /***
@@ -261,5 +283,21 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    const deepCopy = questions.map(
+        (aQuestion: Question): Question => ({
+            ...aQuestion,
+            options: [...aQuestion.options]
+        })
+    );
+    const target = deepCopy.find(
+        (aQuestion: Question): boolean => aQuestion.id === targetId
+    );
+    if (target) {
+        const duplicated = duplicateQuestion(newId, target);
+        const targetIndex = deepCopy.findIndex(
+            (aQuestion: Question): boolean => aQuestion === target
+        );
+        deepCopy.splice(1 + targetIndex, 0, duplicated);
+    }
+    return deepCopy;
 }
