@@ -18,7 +18,7 @@ export function StartAttempt(): JSX.Element {
                         setQuiz(true);
                         subtractOne();
                     }}
-                    disabled={quizActive || attempts === 0}
+                    disabled={quizActive || attempts <= 0}
                 >
                     Start Quiz
                 </Button>
