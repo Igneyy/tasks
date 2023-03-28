@@ -10,10 +10,14 @@ import { Button } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { DoubleHalf } from "./bad-components/DoubleHalf";
+import { ColoredBox } from "./bad-components/ColoredBox";
+import { ShoveBox } from "./bad-components/ShoveBox";
+import { ChooseTeam } from "./bad-components/ChooseTeam";
 
 function App(): JSX.Element {
     return (
-        <>
+        <div>
             <div className="App">
                 <Container>
                     <header className="App-header">
@@ -55,6 +59,14 @@ function App(): JSX.Element {
             </div>
             <div className="App">
                 <hr></hr>
+                <DoubleHalf></DoubleHalf>
+                <hr></hr>
+                <ChooseTeam></ChooseTeam>
+                <hr></hr>
+                <ColoredBox></ColoredBox>
+                <hr></hr>
+                <ShoveBox></ShoveBox>
+                <hr></hr>
                 <Counter></Counter>
                 <hr />
                 <RevealAnswer></RevealAnswer>
@@ -67,7 +79,7 @@ function App(): JSX.Element {
                 <hr />
                 <CycleHoliday></CycleHoliday>
             </div>
-        </>
+        </div>
     );
 }
 
